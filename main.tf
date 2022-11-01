@@ -89,27 +89,27 @@ resource "aws_internet_gateway" "ig" {
   }
 }
 
-#Create nat gateway
-resource "aws_nat_gateway" "nat" {
-  connectivity_type = "private"
-  subnet_id         = element(aws_subnet.public_subnet.*.id, 2)
+# #Create nat gateway
+# resource "aws_nat_gateway" "nat" {
+#   connectivity_type = "private"
+#   subnet_id         = element(aws_subnet.public_subnet.*.id, 2)
 
-  tags = {
-    Name        = "nat"
-    Environment = "${var.environment}"
-  }
-}
+#   tags = {
+#     Name        = "nat"
+#     Environment = "${var.environment}"
+#   }
+# }
 
-# Route for Internet Gateway
-resource "aws_route" "public_internet_gateway" {
-  route_table_id         = aws_route_table.public.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.ig.id
-}
+# # Route for Internet Gateway
+# resource "aws_route" "public_internet_gateway" {
+#   route_table_id         = aws_route_table.public.id
+#   destination_cidr_block = "0.0.0.0/0"
+#   gateway_id             = aws_internet_gateway.ig.id
+# }
 
-# Route for NAT
-resource "aws_route" "private_nat_gateway" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat.id
-}
+# # Route for NAT
+# resource "aws_route" "private_nat_gateway" {
+#   route_table_id         = aws_route_table.private.id
+#   destination_cidr_block = "0.0.0.0/0"
+#   nat_gateway_id         = aws_nat_gateway.nat.id
+# }
